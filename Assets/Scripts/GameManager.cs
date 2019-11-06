@@ -8,6 +8,7 @@ public class GameManager : MonoBehaviour
     private static GameManager _instance;
     public string SpawnPosition;
     private bool m_ShowingText = false;
+    private bool m_showTextCooldown = true; // cooldown
 
     public static GameManager Instance
     {
@@ -44,8 +45,9 @@ public class GameManager : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.E))
             {
                 m_ShowingText = false;
+                mainText.GetComponent<MainTextWriter>().clearText();
                 Time.timeScale = 1;
-                mainText.GetComponent<Text>().text = "";
+                StartCoroutine(setTextCoolDown());
             }
         }
     }
@@ -54,11 +56,20 @@ public class GameManager : MonoBehaviour
     public void SetMainText(string text)
     {
         GameObject mainText = GameObject.FindGameObjectWithTag("MainText");
-        if (mainText)
+        if (mainText && m_showTextCooldown)
         {
             Time.timeScale = 0;
-            mainText.GetComponent<Text>().text = text;
+            mainText.GetComponent<MainTextWriter>().setText(text);
             m_ShowingText = true;
         }
+    }
+
+    private IEnumerator setTextCoolDown()
+    {
+        m_showTextCooldown = false;
+        Debug.Log(m_showTextCooldown);
+        yield return new WaitForSeconds(1f);
+        m_showTextCooldown = true;
+        Debug.Log(m_showTextCooldown);
     }
 }

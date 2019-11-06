@@ -5,19 +5,21 @@ using UnityEngine;
 public class Interactable : MonoBehaviour
 {
     public string text;
-    //private bool m_IsColliding = false;
+    private bool m_IsColliding = false;
 
-    //private void OnTriggerEnter2D(Collider2D collision)
-    //{
-    //    if (collision.gameObject.tag == "Player")
-    //    {
-    //        m_IsColliding = true;
-    //    }
-    //}
-
-    private void OnTriggerStay2D(Collider2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (Input.GetKeyUp(KeyCode.E))
+        m_IsColliding = true;
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        m_IsColliding = false;
+    }
+
+    private void Update()
+    {
+        if (m_IsColliding && Input.GetKeyUp(KeyCode.E))
         {
             if (text != null)
             {
@@ -25,13 +27,4 @@ public class Interactable : MonoBehaviour
             }
         }
     }
-
-    //private void OnTriggerExit2D(Collider2D collision)
-    //{
-    //    if (collision.gameObject.tag == "Player")
-    //    {
-    //        m_IsColliding = false;
-    //    }
-    //}
-
 }
