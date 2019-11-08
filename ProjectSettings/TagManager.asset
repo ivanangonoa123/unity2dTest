@@ -9,6 +9,7 @@ TagManager:
   - SpawnPointRIGHT
   - MainText
   - Inventory
+  - SpotOutside1
   layers:
   - Default
   - TransparentFX
@@ -18,9 +19,9 @@ TagManager:
   - UI
   - 
   - 
-  - 
-  - 
-  - 
+  - Level
+  - Player
+  - Map
   - 
   - 
   - 

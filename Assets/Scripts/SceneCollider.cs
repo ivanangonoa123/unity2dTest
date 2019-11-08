@@ -3,10 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+public enum SceneCollyderType {
+    Scene,
+    Spot
+};
+
 public class SceneCollider : MonoBehaviour
 {
     public string sceneName;
     public string nextSpawnPosition;
+    public SceneCollyderType type;
     BoxCollider2D m_ObjectCollider;
 
     // Start is called before the first frame update
@@ -25,7 +31,16 @@ public class SceneCollider : MonoBehaviour
     {
         if (collision.gameObject.tag == "Player")
         {
-            LoadScene(sceneName);
+            if (type == SceneCollyderType.Scene)
+            {
+                LoadScene(sceneName);
+            }
+            else
+            {
+                GameObject spot = GameObject.FindGameObjectWithTag(sceneName);
+                Vector3 spotPos = spot.transform.position;
+                Camera.main.transform.position = new Vector3(spotPos.x, spotPos.y, Camera.main.transform.position.z);
+            }
         }
     }
 

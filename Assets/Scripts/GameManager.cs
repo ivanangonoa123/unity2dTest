@@ -67,9 +67,7 @@ public class GameManager : MonoBehaviour
     private IEnumerator setTextCoolDown()
     {
         m_showTextCooldown = false;
-        Debug.Log(m_showTextCooldown);
         yield return new WaitForSeconds(1f);
         m_showTextCooldown = true;
-        Debug.Log(m_showTextCooldown);
     }
 }

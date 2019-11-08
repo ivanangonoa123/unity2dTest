@@ -5,6 +5,7 @@ using UnityEngine;
 public class InventoryManager : MonoBehaviour
 {
     public GameObject inventory;
+    public GameObject map;
 
     void Start()
     {
@@ -19,28 +20,38 @@ public class InventoryManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.I) && inventory != null)
         {
-            Animator animator = inventory.GetComponent<Animator>();
+            openMenu(inventory);
+        } else if (Input.GetKeyDown(KeyCode.M) && map != null)
+        {
+            openMenu(map);
+        }
+    }
 
-            if (animator != null)
+    void openMenu(GameObject menu)
+    {
+        Animator animator = menu.GetComponent<Animator>();
+
+        if (animator != null)
+        {
+            if (!menu.activeSelf)
             {
-                if (!inventory.activeSelf)
-                {
-                    Time.timeScale = 0; // pausa
-                    // activo el inventory antes para que corra la
-                    // animacion y activo la animacion
-                    inventory.SetActive(true);
-                    animator.updateMode = AnimatorUpdateMode.UnscaledTime;
-                    animator.SetBool("open", true);
-                } else
-                {
-                    StartCoroutine(CloseInventory(animator));
-                }
+                Time.timeScale = 0; // pausa
+                                    // activo el menu antes para que corra la
+                                    // animacion y activo la animacion
+                menu.SetActive(true);
+                animator.updateMode = AnimatorUpdateMode.UnscaledTime;
+                animator.SetBool("open", true);
+            }
+            else
+            {
+                StartCoroutine(CloseInventory(menu));
             }
         }
     }
 
-    IEnumerator CloseInventory(Animator animator)
+    IEnumerator CloseInventory(GameObject menu)
     {
+        Animator animator = menu.GetComponent<Animator>();
         // arranca la animacion para cerrar
         animator.SetBool("open", false);
         // espera la duracion de la transicion que esta sucediendo
@@ -49,7 +60,6 @@ public class InventoryManager : MonoBehaviour
         // porque timeScale esta en 0 todavia
         Debug.Log(animator.GetCurrentAnimatorStateInfo(0).length);
         yield return new WaitForSecondsRealtime(animator.GetCurrentAnimatorStateInfo(0).length);
-        Debug.Log("ue2");
         // desactiva el inventory (no estoy seguro si realmente es necesario desactivarlo
         inventory.SetActive(false);
         Time.timeScale = 1.0f; // ahora si despauso
