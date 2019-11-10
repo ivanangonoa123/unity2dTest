@@ -52,7 +52,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    // Move to instanciated gameobject
+    // @TODO Move to instanciated gameobject
     public void SetMainText(string text)
     {
         GameObject mainText = GameObject.FindGameObjectWithTag("MainText");
@@ -62,6 +62,15 @@ public class GameManager : MonoBehaviour
             mainText.GetComponent<MainTextWriter>().setText(text);
             m_ShowingText = true;
         }
+    }
+
+    // @TODO Move to instanciated gameobject
+    public bool AddInventoryItem(Item item)
+    {
+        PlayerInventory inventory = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerInventory>();
+        // la funcion al ser bool puede devolver true/false al igual que AddItem
+        // del script Inventory
+        return inventory.AddItem(item);
     }
 
     private IEnumerator setTextCoolDown()

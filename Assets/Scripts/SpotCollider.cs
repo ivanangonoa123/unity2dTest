@@ -15,7 +15,7 @@ public class SpotCollider : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.tag == "Player")
+        if (collision.CompareTag("Player"))
         {
             Camera.main.transform.position = new Vector3(transform.position.x, transform.position.y, Camera.main.transform.position.z);
             m_bgIconAnim.SetBool("isActive", true);
@@ -24,7 +24,7 @@ public class SpotCollider : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.gameObject.tag == "Player")
+        if (collision.CompareTag("Player"))
         {
             m_bgIconAnim.SetBool("isActive", false);
         }

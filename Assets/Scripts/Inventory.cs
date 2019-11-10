@@ -5,32 +5,43 @@ using UnityEngine;
 public class Inventory : MonoBehaviour
 {
     /* 
-     * https://www.youtube.com/watch?v=bTPEMt1RG3s
+     * tutorial de inventory: https://www.youtube.com/watch?v=bTPEMt1RG3s
      * 
      */
-    [SerializeField] Transform itemsParent;
-    [SerializeField] List<Item> items;
-    [SerializeField] ItemSlot[] itemSlots;
+    public Transform itemsParent;
+    public ItemSlot[] itemSlots;
+    public GameObject player;
+    private PlayerInventory m_playerInventory;
 
     private void Start()
     {
+        itemSlots = itemsParent.GetComponentsInChildren<ItemSlot>();
     }
- 
-    private void OnValidate()
-    {
-        if (itemsParent != null)
-            itemSlots = itemsParent.GetComponentsInChildren<ItemSlot>();
 
+    //private void OnValidate()
+    //{
+    //    // @TODO create item slots with player inventory limit
+    //    if (itemsParent != null)
+    //       itemSlots = itemsParent.GetComponentsInChildren<ItemSlot>();
+
+    //    RefreshUI();
+    //}
+
+    private void OnEnable()
+    {
         RefreshUI();
     }
 
     private void RefreshUI()
     {
+        m_playerInventory = player.GetComponent<PlayerInventory>();
+        if (m_playerInventory == null) return;
+
         int i = 0;
 
-        for (; i < items.Count && i < itemSlots.Length; i++)
+        for (; i < m_playerInventory.items.Count && i < itemSlots.Length; i++)
         {
-            itemSlots[i].Item = items[i];
+            itemSlots[i].Item = m_playerInventory.items[i];
         }
 
         // si habia dos items i va a ser 1 aca, el resto de items
@@ -39,30 +50,5 @@ public class Inventory : MonoBehaviour
         {
             itemSlots[i].Item = null;
         }
-    }
-
-    public bool AddItem(Item item)
-    {
-        if (IsFull())
-            return false;
-
-        items.Add(item);
-        RefreshUI();
-        return true;
-    }
-
-    public bool RemoveItem(Item item)
-    {
-        if (items.Remove(item))
-        {
-            RefreshUI();
-            return true;
-        }
-        return false;
-    }
-
-    public bool IsFull()
-    {
-        return items.Count >= itemSlots.Length;
     }
 }

@@ -36,8 +36,8 @@ public class InventoryManager : MonoBehaviour
             if (!menu.activeSelf)
             {
                 Time.timeScale = 0; // pausa
-                                    // activo el menu antes para que corra la
-                                    // animacion y activo la animacion
+                // activo el menu antes para que corra la
+                // animacion y activo la animacion
                 menu.SetActive(true);
                 animator.updateMode = AnimatorUpdateMode.UnscaledTime;
                 animator.SetBool("open", true);
@@ -58,7 +58,6 @@ public class InventoryManager : MonoBehaviour
         // animator.GetCurrentAnimatorStateInfo(0)
         // en tiempo real (WaitForSeconds comun no funca
         // porque timeScale esta en 0 todavia
-        Debug.Log(animator.GetCurrentAnimatorStateInfo(0).length);
         yield return new WaitForSecondsRealtime(animator.GetCurrentAnimatorStateInfo(0).length);
         // desactiva el inventory (no estoy seguro si realmente es necesario desactivarlo
         inventory.SetActive(false);

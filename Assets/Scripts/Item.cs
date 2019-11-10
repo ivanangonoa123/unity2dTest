@@ -6,5 +6,7 @@ using UnityEngine;
 public class Item : ScriptableObject
 {
     public string itemName;
-    public Sprite Icon;
+    [Space]
+    public Sprite icon;
+    public Sprite pickUpSprite;
 }

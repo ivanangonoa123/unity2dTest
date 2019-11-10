@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class ItemSlot : MonoBehaviour
 {
-    [SerializeField] Image Image;
+    [SerializeField] Image m_image;
 
     public Item _item;
     public Item Item {
@@ -15,19 +15,19 @@ public class ItemSlot : MonoBehaviour
 
             if (_item == null)
             {
-                Image.enabled = false;
+                m_image.enabled = false;
             } else {
-                Image.sprite = _item.Icon;
-                Image.enabled = true;
+                m_image.sprite = _item.icon;
+                m_image.enabled = true;
             }
         }
     }
     
     private void OnValidate()
     {
-        if (Image == null)
+        if (m_image == null)
         {
-            Image = GetComponent<Image>();
+            m_image = GetComponent<Image>();
         }
     }
 }

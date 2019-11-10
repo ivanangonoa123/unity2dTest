@@ -11,10 +11,10 @@ GameObject:
   - component: {fileID: 717591480335743703}
   - component: {fileID: 4076009557280698210}
   - component: {fileID: 1532802679219086142}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Interactable
   m_TagString: Untagged
-  m_Icon: {fileID: 3306451490063965843, guid: 0000000000000000d000000000000000, type: 0}
+  m_Icon: {fileID: 7866945982896999795, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -70,3 +70,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 742124d02f50ce640b95c4e00afc0ac0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  text: 
