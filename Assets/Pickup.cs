@@ -32,7 +32,7 @@ public class Pickup : MonoBehaviour
         {
             if (GameManager.Instance.AddInventoryItem(item))
             {
-                GameManager.Instance.SetMainText(m_Text + item.itemName);
+                GameManager.Instance.SetMainText(m_Text + "<color=green>" + item.itemName + "</color>");
                 Destroy(gameObject);
             }
         }

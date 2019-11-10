@@ -16,6 +16,7 @@ public class Inventory : MonoBehaviour
     private void Start()
     {
         itemSlots = itemsParent.GetComponentsInChildren<ItemSlot>();
+        m_playerInventory = player.GetComponent<PlayerInventory>();
     }
 
     //private void OnValidate()
@@ -34,7 +35,6 @@ public class Inventory : MonoBehaviour
 
     private void RefreshUI()
     {
-        m_playerInventory = player.GetComponent<PlayerInventory>();
         if (m_playerInventory == null) return;
 
         int i = 0;
