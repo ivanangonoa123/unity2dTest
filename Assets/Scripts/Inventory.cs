@@ -12,13 +12,16 @@ public class Inventory : MonoBehaviour
      */
     public Transform itemsParent;
     public ItemSlot[] itemSlots;
+    public GameObject itemSlotSubmenu;
     public GameObject player;
-    private PlayerInventory m_playerInventory;
+    private PlayerInventory m_PlayerInventory;
+    private bool m_SubmenuOpen = false;
+    private GameObject m_SelectedSlot;
 
     private void Start()
     {
         itemSlots = itemsParent.GetComponentsInChildren<ItemSlot>();
-        m_playerInventory = player.GetComponent<PlayerInventory>();
+        m_PlayerInventory = player.GetComponent<PlayerInventory>();
     }
 
     //private void OnValidate()
@@ -45,13 +48,13 @@ public class Inventory : MonoBehaviour
 
     private void RefreshUI()
     {
-        if (m_playerInventory == null) return;
+        if (m_PlayerInventory == null) return;
 
         int i = 0;
 
-        for (; i < m_playerInventory.items.Count && i < itemSlots.Length; i++)
+        for (; i < m_PlayerInventory.items.Count && i < itemSlots.Length; i++)
         {
-            itemSlots[i].Item = m_playerInventory.items[i];
+            itemSlots[i].Item = m_PlayerInventory.items[i];
         }
 
         // si habia dos items i va a ser 1 aca, el resto de items
@@ -60,5 +63,34 @@ public class Inventory : MonoBehaviour
         {
             itemSlots[i].Item = null;
         }
+    }
+
+    private void Update()
+    {
+        if (m_SubmenuOpen)
+        {
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                CloseItemSlotSubmenu();
+            }
+        }
+    }
+
+    public void OpenItemSlotSubmenu()
+    {
+        // buscamos el objeto actualmente selccionado
+        m_SelectedSlot = EventSystem.current.currentSelectedGameObject;
+        itemSlotSubmenu.SetActive(true); // activamos el itemSlotSubmenu
+        itemSlotSubmenu.transform.position = m_SelectedSlot.transform.position; // lo posicionamos
+        EventSystem.current.SetSelectedGameObject(itemSlotSubmenu.transform.GetChild(0).gameObject); // le damos focus
+        m_SubmenuOpen = true; // seteamos el bool para chequear por el cierre
+    }
+
+    private void CloseItemSlotSubmenu()
+    {
+        itemSlotSubmenu.SetActive(false);
+        EventSystem.current.SetSelectedGameObject(m_SelectedSlot);
+        m_SelectedSlot = null;
+        m_SubmenuOpen = false;
     }
 }
