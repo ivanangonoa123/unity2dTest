@@ -39,7 +39,8 @@ public class InventoryManager : MonoBehaviour
                 // activo el menu antes para que corra la
                 // animacion y activo la animacion
                 menu.SetActive(true);
-                animator.updateMode = AnimatorUpdateMode.UnscaledTime;
+                // updateMode se lo puede dejar unscaled desde el menu igual
+                // animator.updateMode = AnimatorUpdateMode.UnscaledTime;
                 animator.SetBool("open", true);
             }
             else

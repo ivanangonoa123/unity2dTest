@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class ItemSlot : MonoBehaviour
 {
-    [SerializeField] Image m_image;
+    private Image m_image;
 
     public Item _item;
     public Item Item {
@@ -23,11 +23,11 @@ public class ItemSlot : MonoBehaviour
         }
     }
     
-    private void OnValidate()
+    private void Start()
     {
         if (m_image == null)
         {
-            m_image = GetComponent<Image>();
+            m_image = GetComponentsInChildren<Image>()[1];
         }
     }
 }

@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 public class Inventory : MonoBehaviour
 {
@@ -31,6 +33,14 @@ public class Inventory : MonoBehaviour
     private void OnEnable()
     {
         RefreshUI();
+        EventSystem.current.SetSelectedGameObject(itemSlots[0].gameObject);
+        // bug: https://answers.unity.com/questions/1096174/eventsystemsetselectedgameobject-does-not-highligh.html
+        itemSlots[0].gameObject.GetComponent<Button>().OnSelect(null);
+    }
+
+    private void OnDisable()
+    {
+        EventSystem.current.SetSelectedGameObject(null);
     }
 
     private void RefreshUI()

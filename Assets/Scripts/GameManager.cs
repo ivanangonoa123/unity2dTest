@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -33,6 +34,17 @@ public class GameManager : MonoBehaviour
             DontDestroyOnLoad(gameObject);
             _instance = this;
         }
+    }
+
+    private void Start()
+    {
+        //HideMouseCursor();
+    }
+
+    private void HideMouseCursor()
+    {
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     private void Update()
