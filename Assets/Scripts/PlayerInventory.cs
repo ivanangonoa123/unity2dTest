@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerInventory : MonoBehaviour
 {
     public List<Item> items;
-    [SerializeField] int itemsLimit;
+    [SerializeField] int itemsLimit = 10;
 
     // Start is called before the first frame update
     void Start()

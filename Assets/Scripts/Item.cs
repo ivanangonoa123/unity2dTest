@@ -9,4 +9,10 @@ public class Item : ScriptableObject
     [Space]
     public Sprite icon;
     public Sprite pickUpSprite;
+    public string description;
+
+    public virtual void Use()
+    {
+
+    }
 }

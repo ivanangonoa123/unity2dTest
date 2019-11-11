@@ -76,6 +76,13 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    private IEnumerator setTextCoolDown()
+    {
+        m_showTextCooldown = false;
+        yield return new WaitForSeconds(1f);
+        m_showTextCooldown = true;
+    }
+
     // @TODO Move to instanciated gameobject
     public bool AddInventoryItem(Item item)
     {
@@ -85,10 +92,8 @@ public class GameManager : MonoBehaviour
         return inventory.AddItem(item);
     }
 
-    private IEnumerator setTextCoolDown()
-    {
-        m_showTextCooldown = false;
-        yield return new WaitForSeconds(1f);
-        m_showTextCooldown = true;
+    public void UpdatePlayerHealth(float health) {
+        PlayerHealth playerHealth = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerHealth>();
+        playerHealth.UpdatePlayerHealth(health);
     }
 }
