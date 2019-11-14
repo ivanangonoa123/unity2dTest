@@ -13,15 +13,20 @@ public class Inventory : MonoBehaviour
     public Transform itemsParent;
     public ItemSlot[] itemSlots;
     public GameObject itemSlotSubmenu;
+    public GameObject checkMenu;
     public GameObject player;
-    private PlayerInventory m_PlayerInventory;
-    private bool m_SubmenuOpen = false;
-    private GameObject m_SelectedSlot;
 
-    private void Start()
+    private PlayerInventory m_PlayerInventory;
+    private GameObject m_SelectedSlot;
+    private bool m_SubmenuOpen = false;
+    private bool m_CheckMenuOpen = false;
+
+    private void Awake()
     {
+        Debug.Log("awake");
         itemSlots = itemsParent.GetComponentsInChildren<ItemSlot>();
         m_PlayerInventory = player.GetComponent<PlayerInventory>();
+        Debug.Log("m_PlayerInventory " + m_PlayerInventory);
     }
 
     //private void OnValidate()
@@ -35,8 +40,13 @@ public class Inventory : MonoBehaviour
 
     private void Update()
     {
-        if (m_SubmenuOpen)
+        if (m_CheckMenuOpen)
         {
+            if (Input.GetKeyDown(KeyCode.KeypadEnter) || Input.GetKeyDown(KeyCode.Escape))
+            {
+                CloseCheckMenu();
+            }
+        } else if (m_SubmenuOpen) {
             if (Input.GetKeyDown(KeyCode.Escape))
             {
                 CloseItemSlotSubmenu();
@@ -46,9 +56,12 @@ public class Inventory : MonoBehaviour
 
     private void OnEnable()
     {
-        RefreshUI();
-        EventSystem.current.SetSelectedGameObject(itemSlots[0].gameObject);
-        // bug: https://answers.unity.com/questions/1096174/eventsystemsetselectedgameobject-does-not-highligh.html
+        // @TODO bug sacar esto de OnEnable
+        // RefreshUI esta como coroutine para que aguarde un cacho hasta que los children itemSlots se activen
+        StartCoroutine(RefreshUI());
+
+        EventSystem.current.SetSelectedGameObject(itemSlots[0].gameObject); // marcar el primer item del inv
+        // @TODO bug: https://answers.unity.com/questions/1096174/eventsystemsetselectedgameobject-does-not-highligh.html
         itemSlots[0].gameObject.GetComponent<Button>().OnSelect(null);
     }
 
@@ -57,9 +70,11 @@ public class Inventory : MonoBehaviour
         EventSystem.current.SetSelectedGameObject(null);
     }
 
-    private void RefreshUI()
+    private IEnumerator RefreshUI()
     {
-        if (m_PlayerInventory == null) return;
+        yield return null;
+
+        if (m_PlayerInventory == null) yield break;
 
         int i = 0;
 
@@ -74,6 +89,27 @@ public class Inventory : MonoBehaviour
         {
             itemSlots[i].Item = null;
         }
+    }
+
+    public void OpenCheckMenu()
+    {
+        m_CheckMenuOpen = true;
+        checkMenu.SetActive(true);
+
+        Item selectedItem = m_SelectedSlot.GetComponent<ItemSlot>().Item;
+
+        Debug.Log(checkMenu.transform.Find("Title"));
+        Debug.Log(selectedItem.description);
+
+        checkMenu.transform.Find("Title").GetComponent<TMPro.TextMeshProUGUI>().text = selectedItem.name;
+        checkMenu.transform.Find("Image").GetComponent<Image>().sprite = selectedItem.checkSprite;
+        checkMenu.transform.Find("Desc").GetComponent<MainTextWriter>().setText(selectedItem.description);
+    }
+
+    public void CloseCheckMenu()
+    {
+        checkMenu.SetActive(false);
+        m_CheckMenuOpen = false;
     }
 
     public void OpenItemSlotSubmenu()
@@ -103,7 +139,7 @@ public class Inventory : MonoBehaviour
         selectedItem.Use();
 
         m_PlayerInventory.RemoveItem(selectedItem); // borramos item del player
-        RefreshUI(); // para que se reordenen los items en el inventory
+        StartCoroutine(RefreshUI()); // para que se reordenen los items en el inventory
 
         CloseItemSlotSubmenu();
     }

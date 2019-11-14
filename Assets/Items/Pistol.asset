@@ -15,3 +15,5 @@ MonoBehaviour:
   itemName: Pistol
   icon: {fileID: 21300042, guid: 9144393ad90703440889065188b58930, type: 3}
   pickUpSprite: {fileID: 21300042, guid: 9144393ad90703440889065188b58930, type: 3}
+  checkSprite: {fileID: 21300042, guid: 9144393ad90703440889065188b58930, type: 3}
+  description: 9 mm semi automatic pistol.

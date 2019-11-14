@@ -17,6 +17,8 @@ public class ItemSlot : MonoBehaviour
             {
                 m_image.enabled = false;
             } else {
+                Debug.Log("m_image", m_image.sprite);
+                Debug.Log("_item.icon", _item.icon);
                 m_image.sprite = _item.icon;
                 m_image.enabled = true;
             }

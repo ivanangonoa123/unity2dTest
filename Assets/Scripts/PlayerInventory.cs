@@ -10,7 +10,7 @@ public class PlayerInventory : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        items = new List<Item>();
     }
 
     public bool AddItem(Item item)

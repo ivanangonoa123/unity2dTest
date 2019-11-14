@@ -95,5 +95,6 @@ public class GameManager : MonoBehaviour
     public void UpdatePlayerHealth(float health) {
         PlayerHealth playerHealth = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerHealth>();
         playerHealth.UpdatePlayerHealth(health);
+
     }
 }

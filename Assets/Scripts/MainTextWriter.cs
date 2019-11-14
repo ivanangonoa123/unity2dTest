@@ -9,7 +9,7 @@ public class MainTextWriter : MonoBehaviour
     public float delay;
     private TMPro.TextMeshProUGUI m_text;
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         m_text = GetComponent<TMPro.TextMeshProUGUI>();
     }
